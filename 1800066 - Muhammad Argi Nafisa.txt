@@ -1,0 +1,24 @@
+Saya Muhammad Argi Nafisa mengerjakan evaluasi TP2 dalam mata kuliah Pemrograman Berorientasi Objek
+untuk keberkahanNya maka saya tidak melakukan kecurangan seperti yang telah dispesifikasikan.
+Aamiin.
+
+Kesulitan:
+- konfigurasi koneksi database menggunakan jdbc
+- cara penambahan durasi hari dalam perpanjang
+
+Hal yang baru dipelajari:
+- cara koneksi ke database menggunakan jdbc
+- penggunaan syntax sql dalam java dan cara eksekusi nya
+- cara pindah antar form dalam java
+
+Fitur yang sudah dikerjakan:
+- koneksi database
+- pindah antar form
+- peminjaman
+- pengembalian
+- perpanjang
+
+
+deskripsi:
+- dalam form peminjaman, inputan tanggal pinjam dan tanggal pengembalian harus format date "YYYY-MM-DD"
+- dalam form perpanjang, inputan durasi harus format int
