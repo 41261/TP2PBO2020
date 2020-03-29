@@ -29,10 +29,17 @@ public class Test {
         
         init();
         int status = 0;
-        String q = String.format("SELECT COUNT(*) FROM table_buku WHERE kode_buku = '%s'", kb);
+        String c = "";
+        String q = String.format("SELECT * FROM table_buku");
         try{
             rs = stmt.executeQuery(q);
-            if(rs.next()){
+            while(rs.next()){
+                c = rs.getString("kode_buku");
+                if(c.equals(kb)){
+                    status = 1;
+                }
+            }
+            if(status == 1){
                JOptionPane.showMessageDialog(null, "Gagal Insert Data","Info", JOptionPane.INFORMATION_MESSAGE);
             }else{
                 q = String.format("INSERT INTO table_buku(kode_buku, nama_buku, nama_peminjam, tanggal_pinjam, tanggal_pengembalian) VALUE('%s', '%s', '%s', '%s', '%s')", kb, nb, np, tp, tk);
@@ -47,10 +54,18 @@ public class Test {
     public void deleteBuku(String kb){
         
         init();
-        String q = String.format("SELECT COUNT(*) FROM table_buku WHERE kode_buku = '%s'", kb);
+        int status = 0;
+        String c = "";
+        String q = String.format("SELECT * FROM table_buku");
         try{
             rs = stmt.executeQuery(q);
-            if(rs.next()){
+            while(rs.next()){
+                c = rs.getString("kode_buku");
+                if(c.equals(kb)){
+                    status = 1;
+                }
+            }
+            if(status == 1){
                 q = String.format("DELETE FROM table_buku WHERE kode_buku = '%s'", kb);
                 stmt.execute(q);
             }else{
@@ -65,15 +80,38 @@ public class Test {
     public void updateBuku(String kb, int date){
         
         init();
-        String q3 = String.format("SELECT COUNT(*) FROM table_buku WHERE kode_buku = '%s'", kb);
+        int status = 0;
+        String c = "";
+        String d = "";
+        String q = String.format("SELECT * FROM table_buku");
         try{
-            rs = stmt.executeQuery(q3);
-//            if(rs.next()){
-//                q3 = String.format("UPDATE table_buku SET tanggal_pengembalian =  WHERE kode_buku = '%s'", date, kb);
-//                stmt.executeUpdate(q3);
-//            }else{
-//                JOptionPane.showMessageDialog(null, "Gagal Update Data","Info", JOptionPane.INFORMATION_MESSAGE);
-//            }
+            rs = stmt.executeQuery(q);
+            while(rs.next()){
+                c = rs.getString("kode_buku");
+                if(c.equals(kb)){
+                    status = 1;
+                }
+            }
+            
+            if(status == 1){
+                q = String.format("SELECT tanggal_pengembalian FROM table_buku WHERE kode_buku = '%s'", kb);
+                rs = stmt.executeQuery(q);
+                while(rs.next()){
+                    d = rs.getString("tanggal_pengembalian");
+                }
+                
+                q = String.format("SELECT DATE_ADD('%s', INTERVAL %d DAY) AS result", d, date);
+                rs = stmt.executeQuery(q);
+                while(rs.next()){
+                    c = rs.getString("result");
+                }
+
+                q = String.format("UPDATE table_buku SET tanggal_pengembalian = '%s' WHERE kode_buku = '%s'", c, kb);
+                stmt.execute(q);
+            }else{
+                JOptionPane.showMessageDialog(null, "Gagal Update Data","Info", JOptionPane.INFORMATION_MESSAGE);
+            }
+//           
         }catch (Exception e){
             e.printStackTrace();
         }
